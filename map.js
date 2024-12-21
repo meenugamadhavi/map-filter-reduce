@@ -60,19 +60,29 @@ const doubleLettersOf = function (strings) {
   return strings.map(doubleLetterWordOf);
 };
 
-// boolean negation of [true, false, true] => [false, true, false]
+// ------------------------------ 08_NEGATED_BOOLEANS_OF ------------------
+
 const negatedBooleansOf = function (booleans) {
   return booleans.map(function (boolean) {
     return !boolean;
   });
 };
 
-// character codes of ["a", "b", "c"] => [97, 98, 99]
-// Use the `charCodeAt` method on each string
-const charCodesOf = function (strings) { };
+// ------------------------------ 09_CHAR_CODES_OF ------------------
 
-// extract domain names from ["user1@gmail.com", "admin@yahoo.com"] => ["gmail.com", "yahoo.com"]
-const domainNamesOf = function (emails) { };
+const charCodesOf = function (strings) {
+  return strings.map(function (char) {
+    return char.charCodeAt()
+  })
+};
+
+// ------------------------------ 09_CHAR_CODES_OF ------------------
+
+const domainNamesOf = function (emails) {
+  return emails.map(function (email) {
+    return email.slice(email.indexOf("@") + 1, email.length);
+  })
+};
 
 // split words in ["hello world", "goodbye moon"] => [["hello", "world"], ["goodbye", "moon"]]
 const splitWordsOf = function (strings) { };
@@ -425,7 +435,9 @@ const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [truthValuesOf, [0, 1, 2, 3, -1], [false, true, true, true, true]],
 [reversedStringsOf, ["ab", "madhavi", "kdm"], ["ba", "ivahdam", "mdk"]],
 [doubleLettersOf, ["cat", "ab", "dog"], ["ccaatt", "aabb", "ddoogg"]],
-[negatedBooleansOf, [true, false, false, true], [false, true, true, false]]];
+[negatedBooleansOf, [true, false, false, true], [false, true, true, false]],
+[charCodesOf, ["a", "m", "A", "r"], [97, 109, 65, 114]],
+[domainNamesOf, ["madhavi@gmail.com", "1@google.com"], ["gmail.com", "google.com"]]];
 
 const validateActualExpected = function (actual, expected) {
   if (Array.isArray(expected) && actual.length === expected.length) {
