@@ -108,8 +108,24 @@ const repeatedStringsOf = function (strings) {
   })
 };
 
-// count vowels in ["apple", "banana", "grape"] => [2, 3, 2]
-const countVowelsOf = function (strings) { };
+// ------------------------------ 14_COUNT_VOWELS ----------------------
+
+const vowelCount = function (string) {
+  const vowels = ["a", "e", "i", "o", "u"];
+  const strArray = Array.from(string);
+
+  return strArray.filter(function (str) {
+    return vowels.includes(str);
+  });
+}
+
+const countVowelsOf = function (strings) {
+  return strings.map(function (string) {
+    return vowelCount(string).length;
+  })
+};
+
+// ------------------------------ 15_REVERSED_ARRAYS_OF -----------------
 
 // reverse arrays of [[1, 2, 3], [4, 5, 6]] => [[3, 2, 1], [6, 5, 4]]
 const reversedArraysOf = function (arrays) { };
@@ -456,7 +472,8 @@ const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [splitWordsOf, ["hi hello", "a b c"], [["hi", "hello"], ["a", "b", "c"]]],
 [joinedArraysOf, [[1, 2], [3, 4]], [12, 34]],
 [joinedArraysOf, [["a", "b"], ["c", "d"]], ["ab", "cd"]],
-[repeatedStringsOf, ["hi", "bye"], ["hihi", "byebye"]]
+[repeatedStringsOf, ["hi", "bye"], ["hihi", "byebye"]],
+[countVowelsOf, ["apple", "banana", "kiwi"], [2, 3, 2]]
 ];
 
 const validateActualExpected = function (actual, expected) {
