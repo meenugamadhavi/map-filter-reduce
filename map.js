@@ -76,7 +76,7 @@ const charCodesOf = function (strings) {
   })
 };
 
-// ------------------------------ 09_CHAR_CODES_OF ------------------
+// ------------------------------ 10_DOMAIN_NAMES_OF ------------------
 
 const domainNamesOf = function (emails) {
   return emails.map(function (email) {
@@ -84,8 +84,13 @@ const domainNamesOf = function (emails) {
   })
 };
 
+// ------------------------------ 10_DOMAIN_NAMES_OF ------------------
 // split words in ["hello world", "goodbye moon"] => [["hello", "world"], ["goodbye", "moon"]]
-const splitWordsOf = function (strings) { };
+const splitWordsOf = function (strings) {
+  return strings.map(function (string) {
+    return string.split(" ");
+  })
+};
 
 // join arrays of [["a", "b"], ["c", "d"]] => ["ab", "cd"]
 const joinedArraysOf = function (arrayOfArrays) { };
@@ -437,7 +442,9 @@ const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [doubleLettersOf, ["cat", "ab", "dog"], ["ccaatt", "aabb", "ddoogg"]],
 [negatedBooleansOf, [true, false, false, true], [false, true, true, false]],
 [charCodesOf, ["a", "m", "A", "r"], [97, 109, 65, 114]],
-[domainNamesOf, ["madhavi@gmail.com", "1@google.com"], ["gmail.com", "google.com"]]];
+[domainNamesOf, ["madhavi@gmail.com", "1@google.com"], ["gmail.com", "google.com"]],
+[splitWordsOf, ["hi hello", "a b c"], [["hi", "hello"], ["a", "b", "c"]]]
+];
 
 const validateActualExpected = function (actual, expected) {
   if (Array.isArray(expected) && actual.length === expected.length) {
@@ -456,8 +463,6 @@ const getMark = function (actual, expected) {
 function testAll(results, testCase) {
   const [functionCall, input, expected] = [...testCase];
   const actual = functionCall(input);
-  console.log(actual);
-
   const mark = getMark(actual, expected)
   results.push(mark, functionCall, actual, expected);
 
