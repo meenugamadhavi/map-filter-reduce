@@ -127,15 +127,27 @@ const countVowelsOf = function (strings) {
 
 // ------------------------------ 15_REVERSED_ARRAYS_OF -----------------
 
-// reverse arrays of [[1, 2, 3], [4, 5, 6]] => [[3, 2, 1], [6, 5, 4]]
 const reversedArraysOf = function (arrays) {
   return arrays.map(function (array) {
     return array.toReversed();
   })
 };
 
-// remove vowels from ["apple", "banana", "grape"] => ["ppl", "bnn", "grp"]
-const withoutVowelsOf = function (strings) { };
+// ------------------------------ 16_WITHOUT_VOWELS_Of -----------------
+
+const consonantsOf = function (string) {
+  const vowels = ["a", "e", "i", "o", "u"];
+  const strArray = Array.from(string);
+
+  return strArray.filter(function (str) {
+    return !(vowels.includes(str));
+  });
+}
+const withoutVowelsOf = function (strings) {
+  return strings.map(function (string) {
+    return consonantsOf(string).join("");
+  })
+};
 
 // cumulative sums of [[1, 2, 3], [4, 5, 6]] => [[1, 3, 6], [4, 9, 15]]
 // Example: cumulative sum of [1, 2, 3] is [1, 1+2, 1+2+3]
@@ -478,7 +490,8 @@ const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [joinedArraysOf, [["a", "b"], ["c", "d"]], ["ab", "cd"]],
 [repeatedStringsOf, ["hi", "bye"], ["hihi", "byebye"]],
 [countVowelsOf, ["apple", "banana", "kiwi"], [2, 3, 2]],
-[reversedArraysOf, [[1, 2, 3], [4, 5, 6], [12, 21]], [[3, 2, 1], [6, 5, 4], [21, 12]]]
+[reversedArraysOf, [[1, 2, 3], [4, 5, 6], [12, 21]], [[3, 2, 1], [6, 5, 4], [21, 12]]],
+[withoutVowelsOf, ["apple", "banana", "kdm"], ["ppl", "bnn", "kdm"]]
 ];
 
 const validateActualExpected = function (actual, expected) {
