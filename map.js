@@ -84,19 +84,29 @@ const domainNamesOf = function (emails) {
   })
 };
 
-// ------------------------------ 10_DOMAIN_NAMES_OF ------------------
-// split words in ["hello world", "goodbye moon"] => [["hello", "world"], ["goodbye", "moon"]]
+// ------------------------------ 11_SPLITWORDS_OF --------------------
+
 const splitWordsOf = function (strings) {
   return strings.map(function (string) {
     return string.split(" ");
   })
 };
 
-// join arrays of [["a", "b"], ["c", "d"]] => ["ab", "cd"]
-const joinedArraysOf = function (arrayOfArrays) { };
+// ------------------------------ 12_ARRAY_OF_ARRAYS --------------------
 
-// repeat strings in ["hi", "bye"] => ["hihi", "byebye"]
-const repeatedStringsOf = function (strings) { };
+const joinedArraysOf = function (arrayOfArrays) {
+  return arrayOfArrays.map(function (array) {
+    return typeof array[0] === "number" ? +array.join("") : array.join("")
+  })
+};
+
+// ------------------------------ 13_REPEATED_STRINGS_OF ---------------
+
+const repeatedStringsOf = function (strings) {
+  return strings.map(function (string) {
+    return string + string;
+  })
+};
 
 // count vowels in ["apple", "banana", "grape"] => [2, 3, 2]
 const countVowelsOf = function (strings) { };
@@ -443,7 +453,10 @@ const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [negatedBooleansOf, [true, false, false, true], [false, true, true, false]],
 [charCodesOf, ["a", "m", "A", "r"], [97, 109, 65, 114]],
 [domainNamesOf, ["madhavi@gmail.com", "1@google.com"], ["gmail.com", "google.com"]],
-[splitWordsOf, ["hi hello", "a b c"], [["hi", "hello"], ["a", "b", "c"]]]
+[splitWordsOf, ["hi hello", "a b c"], [["hi", "hello"], ["a", "b", "c"]]],
+[joinedArraysOf, [[1, 2], [3, 4]], [12, 34]],
+[joinedArraysOf, [["a", "b"], ["c", "d"]], ["ab", "cd"]],
+[repeatedStringsOf, ["hi", "bye"], ["hihi", "byebye"]]
 ];
 
 const validateActualExpected = function (actual, expected) {
