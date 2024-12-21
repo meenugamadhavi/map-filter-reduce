@@ -13,10 +13,18 @@ const lengthsOf = function (strings) {
 };
 
 // uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
-const uppercaseOf = function (strings) { };
+const uppercaseOf = function (strings) {
+  return strings.map(function (string) {
+    return string.toUpperCase();
+  })
+};
 
 // first characters of ["apple", "banana", "kiwi"] => ["a", "b", "k"]
-const firstCharactersOf = function (strings) { };
+const firstCharactersOf = function (strings) {
+  return strings.map(function (string) {
+    return string.at(0);
+  })
+};
 
 // truth values of [0, 1, 2, 3] => [false, true, true, true]
 // Assume non-zero numbers are true, and zero is false
@@ -383,7 +391,9 @@ const summarizeBookChapters = function (books) { };
 const getEventAttendees = function (events) { };
 
 const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
-[lengthsOf, ["ab", "cdef", "dkgs", ""], [2, 4, 4, 0]]];
+[lengthsOf, ["ab", "cdef", "dkgs", ""], [2, 4, 4, 0]],
+[uppercaseOf, ["abcd", "AB", "", "c"], ["ABCD", "AB", "", "C"]],
+[firstCharactersOf, ["abcs", "madhavi", "m", "ant"], ["a", "m", "m", "a"]]];
 
 const validateActualExpected = function (actual, expected) {
   if (Array.isArray(expected) && actual.length === expected.length) {
@@ -395,16 +405,19 @@ const validateActualExpected = function (actual, expected) {
   return actual === expected;
 }
 
-function testAll(failed, testCase) {
+const getMark = function (actual, expected) {
+  return validateActualExpected(actual, expected) ? "✅" : "❌";
+}
+
+function testAll(results, testCase) {
   const [functionCall, input, expected] = [...testCase];
   const actual = functionCall(input);
+  const mark = getMark(actual, expected)
+  results.push(mark, functionCall, actual, expected);
 
-  if (!validateActualExpected(actual, expected)) {
-    failed.push(functionCall, actual, expected);
-  }
-
-  return failed;
+  return results;
 }
+
 
 function frameWork(testCases) {
   const table = testCases.reduce(testAll, []);
