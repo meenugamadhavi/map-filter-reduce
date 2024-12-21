@@ -377,3 +377,32 @@ const summarizeBookChapters = function (books) { };
 // [{name: "Concert", attendees: [{firstName: "John", lastName: "Doe"}, {firstName: "Jane", lastName: "Smith"}]}, {name: "Conference", attendees: [{firstName: "Bob", lastName: "Brown"}]}]
 // => [{name: "Concert", attendees: ["John Doe", "Jane Smith"]}, {name: "Conference", attendees: ["Bob Brown"]}]
 const getEventAttendees = function (events) { };
+
+const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]]];
+const validateActualExpected = function (actual, expected) {
+  if (Array.isArray(expected) && actual.length === expected.length) {
+    return expected.every(function (element, index) {
+      return actual[index] === element;
+    })
+  }
+
+  return actual === expected;
+}
+
+function testAll(failed, testCase) {
+  const [functionCall, input, expected] = [...testCase];
+  const actual = functionCall(input);
+
+  if (!validateActualExpected(actual, expected)) {
+    failed.push(functionCall, actual, expected);
+  }
+
+  return failed;
+}
+
+function frameWork(testCases) {
+  const table = testCases.reduce(testAll, []);
+  console.log(table);
+}
+
+frameWork(testCases);
