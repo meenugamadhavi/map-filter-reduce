@@ -1,41 +1,52 @@
-// squares of [1, 2, 3] => [1, 4, 9]
+// --------------------------------- SQUARES_OF -----------------------------
 const squaresOf = function (numbers) {
   return numbers.map(function (number) {
     return number * number;
   })
 };
 
-// lengths of ["apple", "banana", "kiwi"] => [5, 6, 4]
+// -------------------------------- LENGTHS_OF -----------------------------
+
 const lengthsOf = function (strings) {
   return strings.map(function (string) {
     return string.length;
   })
 };
 
-// uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
+// ------------------------------- UPPERCASE_OF ---------------------------
 const uppercaseOf = function (strings) {
   return strings.map(function (string) {
     return string.toUpperCase();
   })
 };
 
-// first characters of ["apple", "banana", "kiwi"] => ["a", "b", "k"]
+// ------------------------------- FIRST_CHARCTERS_OF ---------------------
+
 const firstCharactersOf = function (strings) {
   return strings.map(function (string) {
     return string.at(0);
   })
 };
 
-// truth values of [0, 1, 2, 3] => [false, true, true, true]
-// Assume non-zero numbers are true, and zero is false
+// ------------------------------- TRUTH_VALUES_OF -----------------------
+
 const truthValuesOf = function (numbers) {
   return numbers.map(function (number) {
     return number !== 0;
   })
 };
 
-// reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
-const reversedStringsOf = function (strings) { };
+// ------------------------------- REVERSED_STRING_OF --------------------
+
+const getRevesedStringOf = function (string) {
+  return Array.from(string).reduce(function (revStr, str) {
+    return str + revStr;
+  }, "");
+}
+
+const reversedStringsOf = function (strings) {
+  return strings.map(getRevesedStringOf);
+};
 
 // double letters of ["cat", "dog", "bat"] => ["ccaat", "ddoog", "bbaatt"]
 const doubleLettersOf = function (strings) { };
@@ -398,7 +409,8 @@ const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [lengthsOf, ["ab", "cdef", "dkgs", ""], [2, 4, 4, 0]],
 [uppercaseOf, ["abcd", "AB", "", "c"], ["ABCD", "AB", "", "C"]],
 [firstCharactersOf, ["abcs", "madhavi", "m", "ant"], ["a", "m", "m", "a"]],
-[truthValuesOf, [0, 1, 2, 3], [false, true, true, true]]];
+[truthValuesOf, [0, 1, 2, 3, -1], [false, true, true, true, true]],
+[reversedStringsOf, ["ab", "madhavi", "kdm"], ["ba", "ivahdam", "mdk"]]];
 
 const validateActualExpected = function (actual, expected) {
   if (Array.isArray(expected) && actual.length === expected.length) {
@@ -417,6 +429,8 @@ const getMark = function (actual, expected) {
 function testAll(results, testCase) {
   const [functionCall, input, expected] = [...testCase];
   const actual = functionCall(input);
+  console.log(actual);
+
   const mark = getMark(actual, expected)
   results.push(mark, functionCall, actual, expected);
 
