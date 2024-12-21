@@ -6,7 +6,11 @@ const squaresOf = function (numbers) {
 };
 
 // lengths of ["apple", "banana", "kiwi"] => [5, 6, 4]
-const lengthsOf = function (strings) { };
+const lengthsOf = function (strings) {
+  return strings.map(function (string) {
+    return string.length;
+  })
+};
 
 // uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
 const uppercaseOf = function (strings) { };
@@ -378,7 +382,9 @@ const summarizeBookChapters = function (books) { };
 // => [{name: "Concert", attendees: ["John Doe", "Jane Smith"]}, {name: "Conference", attendees: ["Bob Brown"]}]
 const getEventAttendees = function (events) { };
 
-const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]]];
+const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
+[lengthsOf, ["ab", "cdef", "dkgs", ""], [2, 4, 4, 0]]];
+
 const validateActualExpected = function (actual, expected) {
   if (Array.isArray(expected) && actual.length === expected.length) {
     return expected.every(function (element, index) {
