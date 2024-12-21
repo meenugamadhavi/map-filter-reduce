@@ -28,7 +28,11 @@ const firstCharactersOf = function (strings) {
 
 // truth values of [0, 1, 2, 3] => [false, true, true, true]
 // Assume non-zero numbers are true, and zero is false
-const truthValuesOf = function (numbers) { };
+const truthValuesOf = function (numbers) {
+  return numbers.map(function (number) {
+    return number !== 0;
+  })
+};
 
 // reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
 const reversedStringsOf = function (strings) { };
@@ -393,7 +397,8 @@ const getEventAttendees = function (events) { };
 const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [lengthsOf, ["ab", "cdef", "dkgs", ""], [2, 4, 4, 0]],
 [uppercaseOf, ["abcd", "AB", "", "c"], ["ABCD", "AB", "", "C"]],
-[firstCharactersOf, ["abcs", "madhavi", "m", "ant"], ["a", "m", "m", "a"]]];
+[firstCharactersOf, ["abcs", "madhavi", "m", "ant"], ["a", "m", "m", "a"]],
+[truthValuesOf, [0, 1, 2, 3], [false, true, true, true]]];
 
 const validateActualExpected = function (actual, expected) {
   if (Array.isArray(expected) && actual.length === expected.length) {
