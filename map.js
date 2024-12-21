@@ -1,11 +1,11 @@
-// --------------------------------- SQUARES_OF -----------------------------
+// -------------------------------- 01_SQUARES_OF -----------------------------
 const squaresOf = function (numbers) {
   return numbers.map(function (number) {
     return number * number;
   })
 };
 
-// -------------------------------- LENGTHS_OF -----------------------------
+// ------------------------------- 02_LENGTHS_OF ----------------------------
 
 const lengthsOf = function (strings) {
   return strings.map(function (string) {
@@ -13,14 +13,14 @@ const lengthsOf = function (strings) {
   })
 };
 
-// ------------------------------- UPPERCASE_OF ---------------------------
+// ------------------------------ 03_UPPERCASE_OF ---------------------------
 const uppercaseOf = function (strings) {
   return strings.map(function (string) {
     return string.toUpperCase();
   })
 };
 
-// ------------------------------- FIRST_CHARCTERS_OF ---------------------
+// ------------------------------ 04_FIRST_CHARCTERS_OF ---------------------
 
 const firstCharactersOf = function (strings) {
   return strings.map(function (string) {
@@ -28,7 +28,7 @@ const firstCharactersOf = function (strings) {
   })
 };
 
-// ------------------------------- TRUTH_VALUES_OF -----------------------
+// ------------------------------ 05_TRUTH_VALUES_OF -----------------------
 
 const truthValuesOf = function (numbers) {
   return numbers.map(function (number) {
@@ -36,20 +36,29 @@ const truthValuesOf = function (numbers) {
   })
 };
 
-// ------------------------------- REVERSED_STRING_OF --------------------
+// ------------------------------ 06_REVERSED_STRING_OF --------------------
 
 const getRevesedStringOf = function (string) {
   return Array.from(string).reduce(function (revStr, str) {
-    return str + revStr;
+    return str.concat(revStr);
   }, "");
 }
 
 const reversedStringsOf = function (strings) {
   return strings.map(getRevesedStringOf);
-};
+}
 
-// double letters of ["cat", "dog", "bat"] => ["ccaat", "ddoog", "bbaatt"]
-const doubleLettersOf = function (strings) { };
+// ------------------------------ 07_DOUBLE_LETTERS_OF --------------------
+
+const doubleLetterWordOf = function (string) {
+  return Array.from(string).reduce(function (init, str) {
+    return init.concat(str, str);
+  }, "")
+}
+
+const doubleLettersOf = function (strings) {
+  return strings.map(doubleLetterWordOf);
+};
 
 // boolean negation of [true, false, true] => [false, true, false]
 const negatedBooleansOf = function (booleans) { };
@@ -410,7 +419,8 @@ const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [uppercaseOf, ["abcd", "AB", "", "c"], ["ABCD", "AB", "", "C"]],
 [firstCharactersOf, ["abcs", "madhavi", "m", "ant"], ["a", "m", "m", "a"]],
 [truthValuesOf, [0, 1, 2, 3, -1], [false, true, true, true, true]],
-[reversedStringsOf, ["ab", "madhavi", "kdm"], ["ba", "ivahdam", "mdk"]]];
+[reversedStringsOf, ["ab", "madhavi", "kdm"], ["ba", "ivahdam", "mdk"]],
+[doubleLettersOf, ["cat", "ab", "dog"], ["ccaatt", "aabb", "ddoogg"]]];
 
 const validateActualExpected = function (actual, expected) {
   if (Array.isArray(expected) && actual.length === expected.length) {
