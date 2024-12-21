@@ -61,7 +61,11 @@ const doubleLettersOf = function (strings) {
 };
 
 // boolean negation of [true, false, true] => [false, true, false]
-const negatedBooleansOf = function (booleans) { };
+const negatedBooleansOf = function (booleans) {
+  return booleans.map(function (boolean) {
+    return !boolean;
+  });
+};
 
 // character codes of ["a", "b", "c"] => [97, 98, 99]
 // Use the `charCodeAt` method on each string
@@ -420,7 +424,8 @@ const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [firstCharactersOf, ["abcs", "madhavi", "m", "ant"], ["a", "m", "m", "a"]],
 [truthValuesOf, [0, 1, 2, 3, -1], [false, true, true, true, true]],
 [reversedStringsOf, ["ab", "madhavi", "kdm"], ["ba", "ivahdam", "mdk"]],
-[doubleLettersOf, ["cat", "ab", "dog"], ["ccaatt", "aabb", "ddoogg"]]];
+[doubleLettersOf, ["cat", "ab", "dog"], ["ccaatt", "aabb", "ddoogg"]],
+[negatedBooleansOf, [true, false, false, true], [false, true, true, false]]];
 
 const validateActualExpected = function (actual, expected) {
   if (Array.isArray(expected) && actual.length === expected.length) {
