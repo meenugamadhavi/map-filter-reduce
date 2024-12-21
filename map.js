@@ -149,9 +149,18 @@ const withoutVowelsOf = function (strings) {
   })
 };
 
+// ------------------------------ 17_CUMULATIVE_SUM_OF -----------------
+
 // cumulative sums of [[1, 2, 3], [4, 5, 6]] => [[1, 3, 6], [4, 9, 15]]
 // Example: cumulative sum of [1, 2, 3] is [1, 1+2, 1+2+3]
-const cumulativeSumsOf = function (arrays) { };
+const cumulativeSumsOf = function (arrays) {
+  return arrays.map(function (numbers) {
+    let sum = 0;
+    return numbers.map(function (number) {
+      return sum = sum + number;
+    })
+  })
+};
 
 // reverse words in ["hello world", "goodbye moon"] => ["olleh dlrow", "eybdoog noom"]
 const reversedWordsOf = function (strings) { };
@@ -491,7 +500,8 @@ const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [repeatedStringsOf, ["hi", "bye"], ["hihi", "byebye"]],
 [countVowelsOf, ["apple", "banana", "kiwi"], [2, 3, 2]],
 [reversedArraysOf, [[1, 2, 3], [4, 5, 6], [12, 21]], [[3, 2, 1], [6, 5, 4], [21, 12]]],
-[withoutVowelsOf, ["apple", "banana", "kdm"], ["ppl", "bnn", "kdm"]]
+[withoutVowelsOf, ["apple", "banana", "kdm"], ["ppl", "bnn", "kdm"]],
+[cumulativeSumsOf, [[1, 2, 3], [4, 5, 6]], [[1, 3, 6], [4, 9, 15]]]
 ];
 
 const validateActualExpected = function (actual, expected) {
