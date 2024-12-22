@@ -1,3 +1,9 @@
+// used for other functions
+
+const isGreaterThanTHreshold = function (number, threshold) {
+  return number > threshold;
+}
+
 // --------------------------- 01_FILTER_EVEN_NUMBERS ---------------------
 
 const filterEvenNumbers = function (numbers) {
@@ -10,7 +16,7 @@ const filterEvenNumbers = function (numbers) {
 
 const filterLongWords = function (words) {
   return words.filter(function (word) {
-    return word.length > 5;
+    return isGreaterThanTHreshold(word.length, 5);
   })
 };
 
@@ -18,7 +24,7 @@ const filterLongWords = function (words) {
 
 const filterAdults = function (people) {
   return people.filter(function (person) {
-    return person.age > 30;
+    return isGreaterThanTHreshold(person.age, 30);
   })
 };
 
@@ -38,7 +44,7 @@ const filterActiveUsers = function (users) {
 
 const filterNumbersGreaterThanTen = function (numbers) {
   return numbers.filter(function (number) {
-    return number > 10
+    return isGreaterThanTHreshold(number, 10);
   })
 };
 
@@ -46,24 +52,32 @@ const filterNumbersGreaterThanTen = function (numbers) {
 
 const filterLongBooks = function (books) {
   return books.filter(function (book) {
-    return book.pages > 200;
+    return isGreaterThanTHreshold(book.pages, 200);
   })
 };
 
 // -------------------- 07_FILTER_INCOMPLETE_PROFILES -------------------
 
-// users with incomplete profiles[{ username: "alice", profileComplete: true }, { username: "bob", profileComplete: false }] => [{ username: "bob", profileComplete: false }]
 const filterIncompleteProfiles = function (users) {
   return users.filter(function (user) {
-    return !isTrue(user.profileComplete)
+    return !isTrue(user.profileComplete);
   });
 };
 
-// students with grades above 80 [{name: "John", grade: 75}, {name: "Jane", grade: 85}] => [{name: "Jane", grade: 85}]
-const filterHighGrades = function (students) { };
+// -------------------- 09_GRADES_ABOVE_80 -------------------------------
+const filterHighGrades = function (students) {
+  return students.filter(function (student) {
+    return isGreaterThanTHreshold(student.grade, 80);
+  })
+};
 
-// products that are in stock [{product: "apple", inStock: true}, {product: "banana", inStock: false}] => [{product: "apple", inStock: true}]
-const filterInStockProducts = function (products) { };
+// -------------------- 10_PRODUCTS_ARE_IN_STOCK -------------------------
+
+const filterInStockProducts = function (products) {
+  return products.filter(function (product) {
+    return isTrue(product.inStock);
+  });
+};
 
 // orders placed in the last 30 days [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}] => [{orderDate: "2024-12-01"}]
 const filterRecentOrders = function (orders) { };
@@ -386,7 +400,9 @@ const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]],
 [filterNumbersGreaterThanTen, [1, 2, 3, 10, 11, 67, 23], [11, 67, 23]],
 [filterLongBooks, [{ title: "Book 1", pages: 150 }, { title: "Book 2", pages: 250 }], [{ title: "Book 2", pages: 250 }]],
 [filterIncompleteProfiles, [{ username: "alice", profileComplete: true }, { username: "bob", profileComplete: false }],
-  [{ username: "bob", profileComplete: false }]]
+  [{ username: "bob", profileComplete: false }]],
+[filterHighGrades, [{ name: "John", grade: 35 }, { name: "Jane", grade: 85 }], [{ name: "Jane", grade: 85 }]],
+[filterInStockProducts, [{ product: "apple", inStock: true }, { product: "banana", inStock: false }], [{ product: "apple", inStock: true }]]
 ];
 
 const validateActualExpected = function (actual, expected) {
