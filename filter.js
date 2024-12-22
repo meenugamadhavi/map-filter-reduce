@@ -79,8 +79,16 @@ const filterInStockProducts = function (products) {
   });
 };
 
-// orders placed in the last 30 days [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}] => [{orderDate: "2024-12-01"}]
-const filterRecentOrders = function (orders) { };
+// -------------------- 11_RECENT_ORDERS ---------------------------------
+
+const filterRecentOrders = function (orders) {
+  return orders.filter(function (order) {
+    const date = order.orderDate;
+    const month = +date.slice(date.indexOf("-") + 1, date.lastIndexOf("-"));
+
+    return month === 12;
+  })
+};
 
 // products with a price lower than the average [{name: "item1", price: 10}, {name: "item2", price: 20}, {name: "item3", price: 5}] => [{name: "item1", price: 10}, {name: "item3", price: 5}]
 const filterBelowAveragePrice = function (products) { };
@@ -402,7 +410,8 @@ const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]],
 [filterIncompleteProfiles, [{ username: "alice", profileComplete: true }, { username: "bob", profileComplete: false }],
   [{ username: "bob", profileComplete: false }]],
 [filterHighGrades, [{ name: "John", grade: 35 }, { name: "Jane", grade: 85 }], [{ name: "Jane", grade: 85 }]],
-[filterInStockProducts, [{ product: "apple", inStock: true }, { product: "banana", inStock: false }], [{ product: "apple", inStock: true }]]
+[filterInStockProducts, [{ product: "apple", inStock: true }, { product: "banana", inStock: false }], [{ product: "apple", inStock: true }]],
+[filterRecentOrders, [{ orderDate: "2024-11-01" }, { orderDate: "2024-12-01" }], [{ orderDate: "2024-12-01" }]]
 ];
 
 const validateActualExpected = function (actual, expected) {
