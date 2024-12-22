@@ -81,20 +81,53 @@ const filterInStockProducts = function (products) {
 
 // -------------------- 11_RECENT_ORDERS ---------------------------------
 
+const isRecentOrder = function (date) {
+  const month = +date.slice(date.indexOf("-") + 1, date.lastIndexOf("-"));
+  return month === 12;
+}
+
 const filterRecentOrders = function (orders) {
   return orders.filter(function (order) {
     const date = order.orderDate;
-    const month = +date.slice(date.indexOf("-") + 1, date.lastIndexOf("-"));
-
-    return month === 12;
+    return isRecentOrder(date)
   })
 };
 
-// products with a price lower than the average [{name: "item1", price: 10}, {name: "item2", price: 20}, {name: "item3", price: 5}] => [{name: "item1", price: 10}, {name: "item3", price: 5}]
-const filterBelowAveragePrice = function (products) { };
+// -------------------- 12_FILTER_BELOW_AVERAGE_PRICE --------------------
 
-// active users who posted in the last 7 days [{username: "alice", lastPostDate: "2024-12-01", active: true}, {username: "bob", lastPostDate: "2024-11-20", active: true}] => [{username: "alice", lastPostDate: "2024-12-01", active: true}]
-const filterRecentActiveUsers = function (users) { };
+const averageOf = function (products) {
+  const sum = products.reduce(function (sum, product) {
+    return sum = sum + product.price;
+  }, 0);
+
+  return Math.floor(sum / products.length);
+}
+
+const filterBelowAveragePrice = function (products) {
+  const avg = averageOf(products);
+
+  return products.filter(function (product) {
+    return isGreaterThanTHreshold(avg, product.price);
+  });
+};
+
+// -------------------- 13_RECENT_ACTIVE_USERs --------------------
+
+const arePostedLastWeek = function (user) {
+  const date = user.lastPostDate;
+  const day = +date.slice(date.lastIndexOf("-") + 1, date.length);
+
+  return isGreaterThanTHreshold(7, day);
+}
+
+const filterRecentActiveUsers = function (users) {
+  const activeUsers = filterActiveUsers(users);
+  const recentActiveUSers = activeUsers.filter(function (user) {
+    return isRecentOrder(user.lastPostDate);
+  });
+
+  return recentActiveUSers.filter(arePostedLastWeek)
+};
 
 // students who passed all subjects [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}, {name: "Jane", subjects: [{name: "Math", passed: false}, {name: "Science", passed: true}]}] => [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}]
 const filterStudentsWithAllSubjectsPassed = function (students) { };
@@ -411,7 +444,11 @@ const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]],
   [{ username: "bob", profileComplete: false }]],
 [filterHighGrades, [{ name: "John", grade: 35 }, { name: "Jane", grade: 85 }], [{ name: "Jane", grade: 85 }]],
 [filterInStockProducts, [{ product: "apple", inStock: true }, { product: "banana", inStock: false }], [{ product: "apple", inStock: true }]],
-[filterRecentOrders, [{ orderDate: "2024-11-01" }, { orderDate: "2024-12-01" }], [{ orderDate: "2024-12-01" }]]
+[filterRecentOrders, [{ orderDate: "2024-11-01" }, { orderDate: "2024-12-01" }], [{ orderDate: "2024-12-01" }]],
+[filterBelowAveragePrice, [{ name: "item1", price: 10 }, { name: "item2", price: 20 }, { name: "item3", price: 5 }],
+  [{ name: "item1", price: 10 }, { name: "item3", price: 5 }]],
+[filterRecentActiveUsers, [{ username: "alice", lastPostDate: "2024-12-01", active: true }, { username: "bob", lastPostDate: "2024-11-20", active: true }],
+  [{ username: "alice", lastPostDate: "2024-12-01", active: true }]]
 ];
 
 const validateActualExpected = function (actual, expected) {
