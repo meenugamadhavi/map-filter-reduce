@@ -14,17 +14,21 @@ const filterLongWords = function (words) {
   })
 };
 
-// -------------------- 03_PEOPLE_AGE_ABOVE_30 -----------------
+// -------------------- 03_PEOPLE_AGE_ABOVE_30 --------------------------
 
-// people older than 30 [{name: "Alice", age: 25}, {name: "Bob", age: 35}] => [{name: "Bob", age: 35}]
 const filterAdults = function (people) {
   return people.filter(function (person) {
     return person.age > 30;
   })
 };
 
+// -------------------- 04_FILTER_ACTIVE_USERS -------------------------
 // active users [{username: "alice", active: true}, {username: "bob", active: false}] => [{username: "alice", active: true}]
-// const filterActiveUsers = function (users) { };
+const filterActiveUsers = function (users) {
+  return users.filter(function (user) {
+    return user.active;
+  })
+};
 
 // numbers greater than 10 [5, 12, 7, 18, 3] => [12, 18]
 const filterNumbersGreaterThanTen = function (numbers) { };
@@ -231,7 +235,7 @@ const filterUsersByPostComments = function (users, minComments) { };
 const filterUsersByPostCategory = function (users, category) { };
 
 // Filter users who have a certain number of followers and have posted in the last 30 days [{user: {name: "Tom", followers: 1000, lastPostDate: "2024-11-10"}}] => [{user: {name: "Tom", followers: 1000, lastPostDate: "2024-11-10"}}]
-const filterActiveUsers = function (users, minFollowers, daysAgo) { };
+const filterActiveUsers2 = function (users, minFollowers, daysAgo) { };
 
 // Filter posts that have at least one hashtag from a list of trending hashtags [{post: {title: "Post 1", hashtags: ["#food", "#vegan"]}}] => [{post: {title: "Post 1", hashtags: ["#food", "#vegan"]}}]
 const filterPostsByHashtags = function (posts, trendingHashtags) { };
@@ -356,7 +360,9 @@ const findAnimalsByHabitat = function (animals, lookup) { };
 
 const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]],
 [filterLongWords, ["abcded", "is", "that", "critisize", ""], ["abcded", "critisize"]],
-[filterAdults, [{ name: "Alice", age: 25 }, { name: "Bob", age: 35 }], [{ name: "Bob", age: 35 }]]
+[filterAdults, [{ name: "Alice", age: 25 }, { name: "Bob", age: 35 }], [{ name: "Bob", age: 35 }]],
+[filterActiveUsers, [{ username: "alice", active: true }, { username: "bob", active: false }],
+  [{ username: "alice", active: true }]],
 ];
 
 const validateActualExpected = function (actual, expected) {
