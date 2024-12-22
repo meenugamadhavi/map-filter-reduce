@@ -2,7 +2,7 @@
 
 const filterEvenNumbers = function (numbers) {
   return numbers.filter(function (number) {
-    return number % 2 === 0
+    return number % 2 === 0;
   });
 };
 
@@ -22,12 +22,16 @@ const filterAdults = function (people) {
   })
 };
 
-// -------------------- 04_FILTER_ACTIVE_USERS -------------------------
+// -------------------- 04_FILTER_ACTIVE_USERS --------------------------
+
+const isTrue = function (boolean) {
+  return boolean;
+}
 
 const filterActiveUsers = function (users) {
   return users.filter(function (user) {
-    return user.active;
-  })
+    return isTrue(user.active);
+  });
 };
 
 // -------------------- 05_NUMBERS_GREATERTHAN_10 ----------------------
@@ -38,16 +42,22 @@ const filterNumbersGreaterThanTen = function (numbers) {
   })
 };
 
-// -------------------- 06_FILTER_LONG_BOOKS ----------------------
-// books with more than 200 pages [{title: "Book 1", pages: 150}, {title: "Book 2", pages: 250}] => [{title: "Book 2", pages: 250}]
+// -------------------- 06_FILTER_LONG_BOOKS ---------------------------
+
 const filterLongBooks = function (books) {
   return books.filter(function (book) {
     return book.pages > 200;
   })
 };
 
-// users with incomplete profiles [{username: "alice", profileComplete: true}, {username: "bob", profileComplete: false}] => [{username: "bob", profileComplete: false}]
-const filterIncompleteProfiles = function (users) { };
+// -------------------- 07_FILTER_INCOMPLETE_PROFILES -------------------
+
+// users with incomplete profiles[{ username: "alice", profileComplete: true }, { username: "bob", profileComplete: false }] => [{ username: "bob", profileComplete: false }]
+const filterIncompleteProfiles = function (users) {
+  return users.filter(function (user) {
+    return !isTrue(user.profileComplete)
+  });
+};
 
 // students with grades above 80 [{name: "John", grade: 75}, {name: "Jane", grade: 85}] => [{name: "Jane", grade: 85}]
 const filterHighGrades = function (students) { };
@@ -374,7 +384,9 @@ const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]],
 [filterActiveUsers, [{ username: "alice", active: true }, { username: "bob", active: false }],
   [{ username: "alice", active: true }]],
 [filterNumbersGreaterThanTen, [1, 2, 3, 10, 11, 67, 23], [11, 67, 23]],
-[filterLongBooks, [{ title: "Book 1", pages: 150 }, { title: "Book 2", pages: 250 }], [{ title: "Book 2", pages: 250 }]]
+[filterLongBooks, [{ title: "Book 1", pages: 150 }, { title: "Book 2", pages: 250 }], [{ title: "Book 2", pages: 250 }]],
+[filterIncompleteProfiles, [{ username: "alice", profileComplete: true }, { username: "bob", profileComplete: false }],
+  [{ username: "bob", profileComplete: false }]]
 ];
 
 const validateActualExpected = function (actual, expected) {
