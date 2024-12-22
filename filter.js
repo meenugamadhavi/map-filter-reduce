@@ -111,7 +111,7 @@ const filterBelowAveragePrice = function (products) {
   });
 };
 
-// -------------------- 13_RECENT_ACTIVE_USERS ------------------------
+// -------------------- 13_RECENT_ACTIVE_USERS -------------------------
 
 const arePostedLastWeek = function (user) {
   const date = user.lastPostDate;
