@@ -6,8 +6,13 @@ const filterEvenNumbers = function (numbers) {
   });
 };
 
+// -------------------- 02_WORDS_WITH_MORETHAN_5_LETTERS -----------------
 // words with more than 5 letters ["apple", "banana", "kiwi", "grape"] => ["banana"]
-const filterLongWords = function (words) { };
+const filterLongWords = function (words) {
+  return words.filter(function (word) {
+    return word.length > 5;
+  })
+};
 
 // people older than 30 [{name: "Alice", age: 25}, {name: "Bob", age: 35}] => [{name: "Bob", age: 35}]
 const filterAdults = function (people) { };
@@ -342,7 +347,9 @@ const findInStockItems = function (items, lookup) { };
 // Input: ["Lion", "Elephant", "Shark"], { "Lion": { habitat: "Jungle" }, "Elephant": { habitat: "Jungle" }, "Shark": { habitat: "Ocean" } } , "Jungle"
 // Output: ["Lion", "Elephant"]
 const findAnimalsByHabitat = function (animals, lookup) { };
-const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]]];
+
+const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]],
+[filterLongWords, ["abcded", "is", "that", "critisize", ""], ["abcded", "critisize"]]];
 
 const validateActualExpected = function (actual, expected) {
   if (Array.isArray(expected) && actual.length === expected.length) {
