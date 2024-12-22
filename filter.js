@@ -1,8 +1,9 @@
-// used for other functions
-
-const isGreaterThanTHreshold = function (number, threshold) {
-  return number > threshold;
+const isGreaterThan = function (number1) {
+  return function (number2) {
+    return number2 > number1;
+  }
 }
+
 
 // --------------------------- 01_FILTER_EVEN_NUMBERS ---------------------
 
@@ -15,44 +16,48 @@ const filterEvenNumbers = function (numbers) {
 // -------------------- 02_WORDS_WITH_MORETHAN_5_LETTERS -----------------
 
 const filterLongWords = function (words) {
+  const isGreaterThan5 = isGreaterThan(5);
+
   return words.filter(function (word) {
-    return isGreaterThanTHreshold(word.length, 5);
+    return isGreaterThan5(word.length);
   })
 };
 
 // -------------------- 03_PEOPLE_AGE_ABOVE_30 --------------------------
 
 const filterAdults = function (people) {
+  const isGreaterThan30 = isGreaterThan(30);
+
   return people.filter(function (person) {
-    return isGreaterThanTHreshold(person.age, 30);
+    return isGreaterThan30(person.age);
   })
 };
 
 // -------------------- 04_FILTER_ACTIVE_USERS --------------------------
 
-const isTrue = function (boolean) {
-  return boolean;
-}
-
 const filterActiveUsers = function (users) {
   return users.filter(function (user) {
-    return isTrue(user.active);
+    return user.active;
   });
 };
 
 // -------------------- 05_NUMBERS_GREATERTHAN_10 ----------------------
 
 const filterNumbersGreaterThanTen = function (numbers) {
+  const isGreaterThan10 = isGreaterThan(10);
+
   return numbers.filter(function (number) {
-    return isGreaterThanTHreshold(number, 10);
+    return isGreaterThan10(number);
   })
 };
 
 // -------------------- 06_FILTER_LONG_BOOKS ---------------------------
 
 const filterLongBooks = function (books) {
+  const isGreaterThan200 = isGreaterThan(200);
+
   return books.filter(function (book) {
-    return isGreaterThanTHreshold(book.pages, 200);
+    return isGreaterThan200(book.pages);
   })
 };
 
@@ -60,14 +65,16 @@ const filterLongBooks = function (books) {
 
 const filterIncompleteProfiles = function (users) {
   return users.filter(function (user) {
-    return !isTrue(user.profileComplete);
+    return !user.profileComplete;
   });
 };
 
 // -------------------- 09_GRADES_ABOVE_80 -------------------------------
 const filterHighGrades = function (students) {
+  const isGreaterThan80 = isGreaterThan(80);
+
   return students.filter(function (student) {
-    return isGreaterThanTHreshold(student.grade, 80);
+    return isGreaterThan80(student.grade);
   })
 };
 
@@ -75,13 +82,13 @@ const filterHighGrades = function (students) {
 
 const filterInStockProducts = function (products) {
   return products.filter(function (product) {
-    return isTrue(product.inStock);
+    return product.inStock;
   });
 };
 
 // -------------------- 11_RECENT_ORDERS ---------------------------------
 
-const isRecentOrder = function (date) {
+const isRecentMonth = function (date) {
   const month = +date.slice(date.indexOf("-") + 1, date.lastIndexOf("-"));
   return month === 12;
 }
@@ -89,25 +96,32 @@ const isRecentOrder = function (date) {
 const filterRecentOrders = function (orders) {
   return orders.filter(function (order) {
     const date = order.orderDate;
-    return isRecentOrder(date)
+    return isRecentMonth(date)
   })
 };
 
 // -------------------- 12_FILTER_BELOW_AVERAGE_PRICE --------------------
 
-const averageOf = function (products) {
-  const sum = products.reduce(function (sum, product) {
-    return sum = sum + product.price;
-  }, 0);
+const averageOf = function (values) {
+  const total = values.reduce(function (sum, number) {
+    return sum = sum + number;
+  })
 
-  return Math.floor(sum / products.length);
+  return Math.floor(total / values.length);
+}
+
+const getProductPrice = function (product) {
+  return product.price;
 }
 
 const filterBelowAveragePrice = function (products) {
-  const avg = averageOf(products);
+  const values = products.map(getProductPrice);
+  const average = averageOf(values);
+  const isGreaterThanAvg = isGreaterThan(average);
+
 
   return products.filter(function (product) {
-    return isGreaterThanTHreshold(avg, product.price);
+    return !isGreaterThanAvg(product.price);
   });
 };
 
@@ -117,24 +131,24 @@ const arePostedLastWeek = function (user) {
   const date = user.lastPostDate;
   const day = +date.slice(date.lastIndexOf("-") + 1, date.length);
 
-  return isGreaterThanTHreshold(7, day);
+  return day < 7;
 }
 
 const filterRecentActiveUsers = function (users) {
   const activeUsers = filterActiveUsers(users);
   const recentActiveUSers = activeUsers.filter(function (user) {
-    return isRecentOrder(user.lastPostDate);
+    return isRecentMonth(user.lastPostDate);
   });
 
   return recentActiveUSers.filter(arePostedLastWeek)
 };
 
-// ---------------- 14_STUDENTS_WITH_ALL_PASSED_SUBJECTS----------------
+// ---------------- 14_STUDENTS_WITH_ALL_PASSED_SUBJECTS ---------------
 
 const isStudentPassedAllSubjects = function (subjects) {
   return subjects.every(function (subject) {
-    return isTrue(subject.passed);
-  })
+    return subject.passed;
+  });
 }
 
 const filterStudentsWithAllSubjectsPassed = function (students) {
@@ -143,11 +157,29 @@ const filterStudentsWithAllSubjectsPassed = function (students) {
   });
 };
 
-// people whose birthday is this month [{name: "Alice", birthDate: "2024-12-01"}, {name: "Bob", birthDate: "2024-11-01"}] => [{name: "Alice", birthDate: "2024-12-01"}]
-const filterBirthdaysThisMonth = function (people) { };
+// ---------------- 15_FILTER_BIRTHDAYS_OF_THIS_MONTH -------------------
 
+const filterBirthdaysThisMonth = function (people) {
+  return people.filter(function (person) {
+    return isRecentMonth(person.birthDate);
+  });
+};
+
+// ---------------- 16_AVERAGE_VALUES_OF_ORDERS ------------------------
 // orders that exceed the average order value [{orderId: 1, amount: 20}, {orderId: 2, amount: 50}, {orderId: 3, amount: 10}] => [{orderId: 2, amount: 50}]
-const filterHighValueOrders = function (orders) { };
+const getOrderValues = function (order) {
+  return order.amount;
+}
+
+const filterHighValueOrders = function (orders) {
+  const values = orders.map(getOrderValues);
+  const average = averageOf(values);
+  const isGreaterThanAvg = isGreaterThan(average);
+
+  return orders.filter(function (order) {
+    return isGreaterThanAvg(order.amount);
+  });
+};
 
 // books with reviews higher than the average rating [{title: "Book 1", rating: 4}, {title: "Book 2", rating: 5}, {title: "Book 3", rating: 3}] => [{title: "Book 2", rating: 5}]
 const filterTopRatedBooks = function (books) { };
@@ -461,7 +493,10 @@ const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]],
 [filterRecentActiveUsers, [{ username: "alice", lastPostDate: "2024-12-01", active: true }, { username: "bob", lastPostDate: "2024-11-20", active: true }],
   [{ username: "alice", lastPostDate: "2024-12-01", active: true }]],
 [filterStudentsWithAllSubjectsPassed, [{ name: "John", subjects: [{ name: "Math", passed: true }, { name: "Science", passed: true }] },
-{ name: "Jane", subjects: [{ name: "Math", passed: false }, { name: "Science", passed: true }] }], [{ name: "John", subjects: [{ name: "Math", passed: true }, { name: "Science", passed: true }] }]]
+{ name: "Jane", subjects: [{ name: "Math", passed: false }, { name: "Science", passed: true }] }], [{ name: "John", subjects: [{ name: "Math", passed: true }, { name: "Science", passed: true }] }]],
+[filterBirthdaysThisMonth, [{ name: "Alice", birthDate: "2024-12-01" }, { name: "Bob", birthDate: "2024-11-01" }],
+  [{ name: "Alice", birthDate: "2024-12-01" }]],
+[filterHighValueOrders, [{ orderId: 1, amount: 20 }, { orderId: 2, amount: 50 }, { orderId: 3, amount: 10 }], [{ orderId: 2, amount: 50 }]]
 ];
 
 const validateActualExpected = function (actual, expected) {
