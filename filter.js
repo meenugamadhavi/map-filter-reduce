@@ -23,15 +23,20 @@ const filterAdults = function (people) {
 };
 
 // -------------------- 04_FILTER_ACTIVE_USERS -------------------------
-// active users [{username: "alice", active: true}, {username: "bob", active: false}] => [{username: "alice", active: true}]
+
 const filterActiveUsers = function (users) {
   return users.filter(function (user) {
     return user.active;
   })
 };
 
+// -------------------- 05_NUMBERS_GREATERTHAN-10 -------------------------
 // numbers greater than 10 [5, 12, 7, 18, 3] => [12, 18]
-const filterNumbersGreaterThanTen = function (numbers) { };
+const filterNumbersGreaterThanTen = function (numbers) {
+  return numbers.filter(function (number) {
+    return number > 10
+  })
+};
 
 // books with more than 200 pages [{title: "Book 1", pages: 150}, {title: "Book 2", pages: 250}] => [{title: "Book 2", pages: 250}]
 const filterLongBooks = function (books) { };
@@ -363,6 +368,7 @@ const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]],
 [filterAdults, [{ name: "Alice", age: 25 }, { name: "Bob", age: 35 }], [{ name: "Bob", age: 35 }]],
 [filterActiveUsers, [{ username: "alice", active: true }, { username: "bob", active: false }],
   [{ username: "alice", active: true }]],
+[filterNumbersGreaterThanTen, [1, 2, 3, 10, 11, 67, 23], [11, 67, 23]]
 ];
 
 const validateActualExpected = function (actual, expected) {
