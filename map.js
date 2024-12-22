@@ -39,9 +39,7 @@ const truthValuesOf = function (numbers) {
 // ------------------------------ 06_REVERSED_STRING_OF --------------------
 
 const getRevesedStringOf = function (string) {
-  return Array.from(string).reduce(function (revStr, str) {
-    return str.concat(revStr);
-  }, "");
+  return [...string].toReversed().join("");
 }
 
 const reversedStringsOf = function (strings) {
@@ -51,7 +49,7 @@ const reversedStringsOf = function (strings) {
 // ------------------------------ 07_DOUBLE_LETTERS_OF --------------------
 
 const doubleLetterWordOf = function (string) {
-  return Array.from(string).reduce(function (init, str) {
+  return [...string].reduce(function (init, str) {
     return init.concat(str, str);
   }, "")
 }
@@ -80,7 +78,7 @@ const charCodesOf = function (strings) {
 
 const domainNamesOf = function (emails) {
   return emails.map(function (email) {
-    return email.slice(email.indexOf("@") + 1, email.length);
+    return email.slice(email.indexOf("@") + 1, -1);// change
   })
 };
 
@@ -110,8 +108,8 @@ const repeatedStringsOf = function (strings) {
 
 // ------------------------------ 14_COUNT_VOWELS ----------------------
 
+const vowels = ["a", "e", "i", "o", "u"];
 const vowelCount = function (string) {
-  const vowels = ["a", "e", "i", "o", "u"];
   const strArray = Array.from(string);
 
   return strArray.filter(function (str) {
@@ -130,40 +128,41 @@ const countVowelsOf = function (strings) {
 const reversedArraysOf = function (arrays) {
   return arrays.map(function (array) {
     return array.toReversed();
-  })
+  });
 };
 
 // ------------------------------ 16_WITHOUT_VOWELS_Of -----------------
 
 const consonantsOf = function (string) {
-  const vowels = ["a", "e", "i", "o", "u"];
   const strArray = Array.from(string);
 
   return strArray.filter(function (str) {
     return !(vowels.includes(str));
   });
 }
+
 const withoutVowelsOf = function (strings) {
   return strings.map(function (string) {
     return consonantsOf(string).join("");
-  })
+  });
 };
 
 // ------------------------------ 17_CUMULATIVE_SUM_OF -----------------
+const sumOf = function (numbers) {
+  let sum = 0;
+  return numbers.map(function (number) {
+    return sum = sum + number;
+  });
+}
 
-// cumulative sums of [[1, 2, 3], [4, 5, 6]] => [[1, 3, 6], [4, 9, 15]]
-// Example: cumulative sum of [1, 2, 3] is [1, 1+2, 1+2+3]
 const cumulativeSumsOf = function (arrays) {
-  return arrays.map(function (numbers) {
-    let sum = 0;
-    return numbers.map(function (number) {
-      return sum = sum + number;
-    })
-  })
+  return arrays.map(sumOf);
 };
 
 // reverse words in ["hello world", "goodbye moon"] => ["olleh dlrow", "eybdoog noom"]
-const reversedWordsOf = function (strings) { };
+
+const reversedWordsOf = function (strings) {
+};
 
 // extract unique characters from ["apple", "banana", "grape"] => ["apl", "ban", "gra"]
 // Maintain the order of their first appearance in each string
@@ -501,7 +500,8 @@ const testCases = [[squaresOf, [1, 2, 3], [1, 4, 9]],
 [countVowelsOf, ["apple", "banana", "kiwi"], [2, 3, 2]],
 [reversedArraysOf, [[1, 2, 3], [4, 5, 6], [12, 21]], [[3, 2, 1], [6, 5, 4], [21, 12]]],
 [withoutVowelsOf, ["apple", "banana", "kdm"], ["ppl", "bnn", "kdm"]],
-[cumulativeSumsOf, [[1, 2, 3], [4, 5, 6]], [[1, 3, 6], [4, 9, 15]]]
+[cumulativeSumsOf, [[1, 2, 3], [4, 5, 6]], [[1, 3, 6], [4, 9, 15]]],
+  // [reversedWordsOf, ["hi hello", "ab cd"], ["ih olleh", "ba dc"]]
 ];
 
 const validateActualExpected = function (actual, expected) {
