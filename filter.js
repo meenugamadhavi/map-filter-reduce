@@ -1,5 +1,10 @@
-// even numbers [1, 2, 3, 4, 5] => [2, 4]
-const filterEvenNumbers = function (numbers) { };
+// --------------------------- 01_FILTER_EVEN_NUMBERS ---------------------
+
+const filterEvenNumbers = function (numbers) {
+  return numbers.filter(function (number) {
+    return number % 2 === 0
+  });
+};
 
 // words with more than 5 letters ["apple", "banana", "kiwi", "grape"] => ["banana"]
 const filterLongWords = function (words) { };
@@ -8,7 +13,7 @@ const filterLongWords = function (words) { };
 const filterAdults = function (people) { };
 
 // active users [{username: "alice", active: true}, {username: "bob", active: false}] => [{username: "alice", active: true}]
-const filterActiveUsers = function (users) { };
+// const filterActiveUsers = function (users) { };
 
 // numbers greater than 10 [5, 12, 7, 18, 3] => [12, 18]
 const filterNumbersGreaterThanTen = function (numbers) { };
@@ -188,7 +193,7 @@ const filterStudentsByGrade = function (students, minGrade) { };
 const filterBooksByAward = function (books, award) { };
 
 // Filter users where at least one post has more than a specific number of likes [{user: {name: "John", posts: [{title: "Post 1", likes: 150}, {title: "Post 2", likes: 20}]}}] => [{user: {name: "John", posts: [{title: "Post 1", likes: 150}, {title: "Post 2", likes: 20}]}}]
-const filterUsersByPostLikes = function (users, minLikes) { };
+// const filterUsersByPostLikes = function (users, minLikes) { };
 
 // Filter cities where at least one attraction is in a specific category [{city: {name: "Paris", attractions: [{name: "Eiffel Tower", category: "landmark"}, {name: "Louvre", category: "museum"}]}}] => [{city: {name: "Paris", attractions: [{name: "Eiffel Tower", category: "landmark"}, {name: "Louvre", category: "museum"}]}}]
 const filterCitiesByAttractionCategory = function (cities, category) { };
@@ -337,3 +342,34 @@ const findInStockItems = function (items, lookup) { };
 // Input: ["Lion", "Elephant", "Shark"], { "Lion": { habitat: "Jungle" }, "Elephant": { habitat: "Jungle" }, "Shark": { habitat: "Ocean" } } , "Jungle"
 // Output: ["Lion", "Elephant"]
 const findAnimalsByHabitat = function (animals, lookup) { };
+const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]]];
+
+const validateActualExpected = function (actual, expected) {
+  if (Array.isArray(expected) && actual.length === expected.length) {
+    return expected.every(function (element, index) {
+      return actual[index] === element;
+    })
+  }
+
+  return actual === expected;
+}
+
+const getMark = function (actual, expected) {
+  return validateActualExpected(actual, expected) ? "✅" : "❌";
+}
+
+function testAll(results, testCase) {
+  const [functionCall, input, expected] = [...testCase];
+  const actual = functionCall(input);
+  const mark = getMark(actual, expected)
+  results.push(mark, functionCall, actual, expected);
+
+  return results;
+}
+
+function frameWork(testCases) {
+  const table = testCases.reduce(testAll, []);
+  console.log(table);
+}
+
+frameWork(testCases);
