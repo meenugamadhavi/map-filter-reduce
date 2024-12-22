@@ -111,7 +111,7 @@ const filterBelowAveragePrice = function (products) {
   });
 };
 
-// -------------------- 13_RECENT_ACTIVE_USERs --------------------
+// -------------------- 13_RECENT_ACTIVE_USERS ------------------------
 
 const arePostedLastWeek = function (user) {
   const date = user.lastPostDate;
@@ -129,8 +129,19 @@ const filterRecentActiveUsers = function (users) {
   return recentActiveUSers.filter(arePostedLastWeek)
 };
 
-// students who passed all subjects [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}, {name: "Jane", subjects: [{name: "Math", passed: false}, {name: "Science", passed: true}]}] => [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}]
-const filterStudentsWithAllSubjectsPassed = function (students) { };
+// ---------------- 14_STUDENTS_WITH_ALL_PASSED_SUBJECTS----------------
+
+const isStudentPassedAllSubjects = function (subjects) {
+  return subjects.every(function (subject) {
+    return isTrue(subject.passed);
+  })
+}
+
+const filterStudentsWithAllSubjectsPassed = function (students) {
+  return students.filter(function (student) {
+    return isStudentPassedAllSubjects(student.subjects);
+  });
+};
 
 // people whose birthday is this month [{name: "Alice", birthDate: "2024-12-01"}, {name: "Bob", birthDate: "2024-11-01"}] => [{name: "Alice", birthDate: "2024-12-01"}]
 const filterBirthdaysThisMonth = function (people) { };
@@ -448,7 +459,9 @@ const testCases = [[filterEvenNumbers, [112, 23, 45, 65, 0, 1], [112, 0]],
 [filterBelowAveragePrice, [{ name: "item1", price: 10 }, { name: "item2", price: 20 }, { name: "item3", price: 5 }],
   [{ name: "item1", price: 10 }, { name: "item3", price: 5 }]],
 [filterRecentActiveUsers, [{ username: "alice", lastPostDate: "2024-12-01", active: true }, { username: "bob", lastPostDate: "2024-11-20", active: true }],
-  [{ username: "alice", lastPostDate: "2024-12-01", active: true }]]
+  [{ username: "alice", lastPostDate: "2024-12-01", active: true }]],
+[filterStudentsWithAllSubjectsPassed, [{ name: "John", subjects: [{ name: "Math", passed: true }, { name: "Science", passed: true }] },
+{ name: "Jane", subjects: [{ name: "Math", passed: false }, { name: "Science", passed: true }] }], [{ name: "John", subjects: [{ name: "Math", passed: true }, { name: "Science", passed: true }] }]]
 ];
 
 const validateActualExpected = function (actual, expected) {
