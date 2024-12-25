@@ -109,7 +109,7 @@ const concatenateWords = function (words) {
 // ------------------------- 12_LONGEST_WORD -----------------------------------
 const longestWord = function (words) {
   return words.reduce(function (maxWord, word) {
-    return maxWord.length > word.length ? maxWord : word;
+    return maxWord.length >= word.length ? maxWord : word;
   }, "");
 };
 
@@ -135,7 +135,7 @@ const joinWithComma = function (words) {
 };
 
 // ------------------------- 15_REVERSED_WORDS ---------------------------------
-// reverseWords(["hello", "world"]) => "world hello"
+
 const reverseWords = function (words) {
   return words.reduce((revrsedWord, word) => word + " " + revrsedWord);
 };
@@ -175,7 +175,7 @@ const countVowelsInWords = function (words) {
 };
 
 // ------------------------- 18_CAMEL_CASE -------------------------------------
-// makeCamelCase(["hello", "world", "how", "are", "you"]) => "helloWorldHowAreYou"
+
 const makeCamelCase = function (words) {
   return words.reduce(function (camelCaseWord, word) {
     return camelCaseWord + word[0].toUpperCase() + word.slice(1);
@@ -183,7 +183,7 @@ const makeCamelCase = function (words) {
 };
 
 // ------------------------- 19_REVERSE_STRING ---------------------------------
-// reverseString(["apple", "banana", "cherry"]) => "elppaananabyrrehc"
+
 const reverseOf = function (word) {
   return [...word].reduce(function (reverse, char) {
     return char + reverse;
@@ -198,7 +198,7 @@ const reverseString = function (words) {
 };
 
 // ------------------------- 20_duplicate_numbers ------------------------------
-// duplicateNumbers([1, 2, 3]) => [1, 1, 2, 2, 3, 3]
+
 const duplicateNumbers = function (numbers) {
   return numbers.reduce(function (duplicates, number) {
     duplicates.push(number, number);
@@ -220,7 +220,7 @@ const concatenateArrays = function (arrays) {
 };
 
 // ------------------------- 22_FLATTEN_ARRAYS ---------------------------------
-// flattenArray([[1, 2], [3, 4], [5, 6]]) => [1, 2, 3, 4, 5, 6]
+
 const flattenArray = function (arrays) {
   return arrays.reduce(function (flattenedArray, array) {
     flattenedArray.push(array);
@@ -229,7 +229,6 @@ const flattenArray = function (arrays) {
 };
 
 // ------------------------- 23_UNIQUE_ELEMENTS --------------------------------
-// uniqueNumbers([1, 2, 2, 3, 4, 4, 5]) => [1, 2, 3, 4, 5]
 
 const isElementOccuredAgain = function (init, element) {
   if (!init.includes(element)) {
@@ -243,59 +242,177 @@ const uniqueNumbers = function (numbers) {
   return numbers.reduce(isElementOccuredAgain, []);
 };
 
-// groupByLength(["apple", "banana", "cherry", "date"]) => { 5: ["apple", "cherry"], 6: ["banana"], 4: ["date"] }
-const groupByLength = function (strings) {};
+// ------------------------- 24_GROUP_BY_LENGTH --------------------------------
 
-// countOccurrences(["apple", "banana", "cherry", "banana"]) => { apple: 1, banana: 2, cherry: 1 }
-const countOccurrences = function (strings) {};
+// groupByLength(["apple", "banana", "cherry", "date"]) =>
+// { 5: ["apple", "cherry"], 6: ["banana"], 4: ["date"] }
+
+const groupByLength = function (strings) {
+  return strings.reduce(function (object, string) {
+    if (string.length in object) {
+      object[string.length].push(string);
+      return object;
+    }
+    object[string.length] = [string];
+    return object;
+  }, {});
+};
+
+// ------------------------- 25_OCCURENCES -------------------------------------
+
+// countOccurrences(["apple", "banana", "cherry", "banana"]) =>
+// { apple: 1, banana: 2, cherry: 1 }
+
+const countOccurrences = function (strings) {
+  const occurences = [];
+  return strings.reduce(function (object, string) {
+    if (!occurences.includes(string) || !string in object) {
+      object[string] = 0;
+    }
+    object[string] += 1;
+    occurences.push(string);
+    return object;
+  }, {});
+};
 
 // mergeObjects([{ a: 1, b: 2 }, { b: 3, c: 4 }, { a: 5 }]) => { a: 6, b: 5, c: 4 }
 const mergeObjects = function (objects) {};
 
+// ------------------------- 27_zip_ELEMENTS -----------------------------------
+
 // zip(["a", "b", "c"], [1, 2, 3]) => { "a": 1, "b": 2, "c": 3 }
-const zip = function (keys, values) {};
+const zip = function (keys, values) {
+  return keys.reduce(function (object, key, index) {
+    object[key] = values[index];
+    return object;
+  }, {});
+};
 
-// makeObject(["city", "country"], ["Paris", "France"]) => { "city": "Paris", "country": "France" }
-const makeObject = function (keys, values) {};
+// ------------------------- 28_MAKE_OBJECT ------------------------------------
+// makeObject(["city", "country", "India"], ["Paris", "France"]) =>
+// { "city": "Paris", "country": "France" }
 
+const makeObject = function (keys, values) {
+  return keys.reduce(function (object, key, index) {
+    object[key] = values[index];
+    return object;
+  }, {});
+};
+
+// ------------------------- 29_INVERT_OBJECT ----------------------------------
 // invertObject({ "a": 1, "b": 2, "c": 3 }) => { 1: "a", 2: "b", 3: "c" }
-const invertObject = function (obj) {};
 
-// mergeArrays([["a", 1], ["b", 2]], [["c", 3], ["d", 4]]) => { "a": 1, "b": 2, "c": 3, "d": 4 }
-const mergeArrays = function (arr1, arr2) {};
+const invertObject = function (obj) {
+  const arrays = Object.entries(obj);
+  return arrays.reduce(function (object, array) {
+    object[array[1]] = array[0];
+    return object;
+  }, {});
+};
 
-// groupByProperty([{name: "John", age: 25}, {name: "Jane", age: 30}]) => { 25: [{name: "John", age: 25}], 30: [{name: "Jane", age: 30}] }
-const groupByProperty = function (objects) {};
+// ------------------------- 30_MERGE_ARRAYS -----------------------------------
+// mergeArrays([["a", 1], ["b", 2]], [["c", 3], ["d", 4]]) =>
+//  { "a": 1, "b": 2, "c": 3, "d": 4 }
 
+const merge = function (arrays, object) {
+  return arrays.reduce(function (object, array) {
+    object[array[0]] = array[1];
+    return object;
+  }, object);
+};
+
+const mergeArrays = function (arr1, arr2) {
+  const arrayToObj = merge(arr1, {});
+  return merge(arr2, arrayToObj);
+};
+
+// ------------------------- 31_GROUP_BY_PROPRTY -------------------------------
+
+// groupByProperty([{name: "John", age: 25}, {name: "Jane", age: 30}]) =>
+// { 25: [{name: "John", age: 25}], 30: [{name: "Jane", age: 30}] }
+
+const groupByProperty = function (objects) {
+  return objects.reduce(function (newObj, object) {
+    newObj[object.age] = object;
+    return newObj;
+  }, {});
+};
+
+// ------------------------- 32_ASCENDING_GROUPS -------------------------------
 // ascendingGroups([1,2,3,4,3,4,5,10,6,7,8,9]) => [[1,2,3,4],[3,4,5],[10],[6,7,8,9]]
-const ascendingGroups = function (numbers) {};
+const ascendingGroups = function (numbers) {
+  return numbers.reduce(function (groupedArray, number, index) {});
+};
 
 // flattenToObject([['a', 1], ['b', 2], ['c', 3]]) => { a: 1, b: 2, c: 3 }
-const flattenToObject = function (pairs) {};
+const flattenToObject = function (pairs) {
+  return pairs.reduce(function (pairsObject, pair) {
+    pairsObject[pair[0]] = pair[1];
+    return pairsObject;
+  }, {});
+};
 
-// longestString(["apple", "banana", "cherry", "dates"]) => "banana"
-const longestString = function (strings) {};
+//---------------------------- LONGEST_WORD ------------------------------------
+
+const longestString = function (strings) {
+  return longestWord(strings);
+};
 
 // mergeIntervals([[1,3], [2,4], [5,7]]) => [[1, 4], [5, 7]]
 const mergeIntervals = function (intervals) {};
+//---------------------------- SUM_AND_COUNT -----------------------------------
 
 // sumAndCount([1, 2, 3, 4]) => { sum: 10, count: 4 }
-const sumAndCount = function (numbers) {};
+const sumAndCount = function (numbers) {
+  return numbers.reduce(
+    function ({ sum, count }, number) {
+      sum = sum + number;
+      count = count + 1;
+      return { sum, count };
+    },
+    { sum: 0, count: 0 }
+  );
+};
 
 // deepFlatten([[1,2], [3,4, [5,6]], 7]) => [1,2,3,4,5,6,7]
 const deepFlatten = function (arr) {};
 
+//---------------------------- FIND_MAX -------------------------------
 // findMax([1, 2, 3, 4, 5]) => 5
-const findMax = function (numbers) {};
+const findMax = function (numbers) {
+  return maxOf(numbers);
+};
 
+//---------------------------- CUMULATIVE_SUM -------------------------------
 // cumulativeSum([1,2,3,4]) => [1, 3, 6, 10]
-const cumulativeSum = function (numbers) {};
+const sumOfElements = function (sum, number) {
+  const total = sum.at(-1) + number;
+  sum.push(total);
+  return sum;
+};
+
+const cumulativeSum = function (numbers) {
+  return numbers.reduce(sumOfElements, [0]).slice(1, numbers.length + 1);
+};
 
 // equalChunksOfAtLeast([1, 1, 1, 2, 2, 5, 1, 1]) => [[1,1,1], [2,2], [1,1]]
 const equalChunksOfAtLeast = function (numbers) {};
 
+//---------------------------- GROUP_BY_TYPE -------------------------------
 // groupByType([1, 'a', 2, 'b', 3, 'c', 4]) => { number: [1, 2, 3, 4], string: ['a', 'b', 'c'] }
-const groupByType = function (array) {};
+const groupElements = function ({ number, string }, element) {
+  if (typeof element === "number") {
+    number.push(element);
+    return { number, string };
+  }
+
+  string.push(element);
+  return { number, string };
+};
+
+const groupByType = function (array) {
+  return array.reduce(groupElements, { number: [], string: [] });
+};
 
 // runningAverages([1, 2, 3, 4]) => [1, 1.5, 2, 2.5]
 const runningAverages = function (numbers) {};
@@ -303,11 +420,31 @@ const runningAverages = function (numbers) {};
 // flattenObject({a: {b: {c: 1}}, d: {e: 2}}) => { 'a.b.c': 1, 'd.e': 2 }
 const flattenObject = function (obj) {};
 
+//---------------------------- SPLIT_INTO_ARRAYS -------------------------------
 // splitIntoSubarrays([1,2,3,4,5,6,7], 3) => [[1,2,3], [4,5,6], [7]]
-const splitIntoSubarrays = function (arr, size) {};
+const splitIntoSubarrays = function (arr, size) {
+  return arr.reduce(
+    function (array, element) {
+      if (array.at(-1).length === size) {
+        array.push([]);
+      }
+      array.at(-1).push(element);
+      return array;
+    },
+    [[]]
+  );
+};
 
-// groupByFirstLetter(["apple", "banana", "cherry", "date"]) => { a: ["apple"], b: ["banana"], c: ["cherry"], d: ["date"] }
-const groupByFirstLetter = function (words) {};
+// groupByFirstLetter(["apple", "banana", "cherry", "date", "ac","vf"]) => { a: ["apple"], b: ["banana"], c: ["cherry"], d: ["date"] }
+const groupByFirstLetter = function (words) {
+  return words.reduce(function (object, word) {
+    if (!(word[0] in object)) {
+      object[word[0]] = [];
+    }
+    object[word[0]].push(word);
+    return object;
+  }, {});
+};
 
 // findFirstNonRepeated([1,2,3,4,2,1,5]) => 3
 const findFirstNonRepeated = function (numbers) {};
@@ -315,7 +452,20 @@ const findFirstNonRepeated = function (numbers) {};
 //---------------------------- 42_COUNT_VOWELS ---------------------------------
 
 // countVowels(["apple", "banana", "grape"]) => { a: 6, e: 3, i: 0, o: 0, u: 0 }
-const countVowels = function (words) {};
+const vowelCount = function (object, string) {
+  const vowels = ["a", "e", "i", "o", "u"];
+
+  return [...string].reduce(function (object, char) {
+    if (vowels.includes(char)) {
+      object[char] += 1;
+    }
+    return object;
+  }, object);
+};
+
+const countVowels = function (words) {
+  return words.reduce(vowelCount, { a: 0, e: 0, i: 0, o: 0, u: 0 });
+};
 
 //---------------------------- 43_CONSECUTIVE_DUPLICATES -----------------------
 
@@ -370,43 +520,50 @@ const cartesianProduct = function (arr1, arr2) {
 //---------------------------------- 48_GROUP_BY_DATE --------------------------
 
 // groupByDate([{ date: '2024-01-01', value: 10 }, { date: '2024-01-01', value: 20 }, { date: '2024-01-02', value: 30 }]) => { '2024-01-01': [10, 20], '2024-01-02': [30] }
-const arrangeData = function ({ A, B }, { date, value }) {
-  if (date === "2024-01-01") {
-    A.push(value);
-    return { A, B };
+const arrangeData = function (object, { date, value }) {
+  if (!(date in object)) {
+    object[date] = [];
   }
-  B.push(value);
-  return { A, B };
+  object[date].push(value);
+  return object;
 };
 
 const groupByDate = function (records) {
-  return records.reduce(arrangeData, { A: [], B: [] });
+  return records.reduce(arrangeData, {});
 };
 
 //---------------------------------- 49_MIN_MAX --------------------------------
 // findMinMax([1, 2, 3, 4, 5]) => { min: 1, max: 5 }
-const getMaxMin = function ({ min, max }, number) {
-  number < min ? (min = number) : (max = number);
-  return { min, max };
-};
 
 const findMinMax = function (numbers) {
-  return numbers.reduce(getMaxMin, { min: Infinity, max: -Infinity });
+  return { min: minOf(numbers), max: maxOf(numbers) };
 };
 
 //---------------------------------- 50_SUM_BY_CATEGORY ------------------------
 // sumByCategory([{ category: 'A', value: 10 }, { category: 'B', value: 20 }, { category: 'A', value: 30 }]) => { A: 40, B: 20 }
-const sumOfValue = function ({ A, B }, { category, value }) {
-  if (category === "A") {
-    A = A + value;
-    return { A, B };
+// const sumOfValue = function (object, { category, value }) {
+//   if (category === "A") {
+//     A = A + value;
+//     return { A, B };
+//   }
+//   B = B + value;
+//   return { A, B };
+// };
+
+// const sumByCategory = function (items) {
+//   return items.reduce(sumOfValue, { A: 0, B: 0 });
+// };
+const sumOfValue = function (object, { category, value }) {
+  console.log("entered", object[category], category);
+  if (!(category in object)) {
+    object[category] = 0;
   }
-  B = B + value;
-  return { A, B };
+  object[category] += value;
+  return object;
 };
 
 const sumByCategory = function (items) {
-  return items.reduce(sumOfValue, { A: 0, B: 0 });
+  return items.reduce(sumOfValue, {});
 };
 
 console.log(sumOfSquares([1, 2, 3, 4]));
@@ -415,3 +572,11 @@ console.log(countNegativeNumbers([1, -2, 3, -4, 9]));
 console.log(findSumOfEvenSquares([1, -2, 3, -4, 9]));
 console.log(concatenateWords(["hello", "world"]));
 console.log = function () {};
+
+function something() {
+  let a = 1;
+  let b = 2;
+  if (true) a = "s";
+  b = "w";
+  return [a, b];
+}
