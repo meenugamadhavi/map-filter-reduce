@@ -361,17 +361,16 @@ const longestString = function (strings) {
 // mergeIntervals([[1,3], [2,4], [5,7]]) => [[1, 4], [5, 7]]
 const mergeIntervals = function (intervals) {};
 //---------------------------- SUM_AND_COUNT -----------------------------------
-
 // sumAndCount([1, 2, 3, 4]) => { sum: 10, count: 4 }
+
+const getSumAndCount = function ({ sum, count }, number) {
+  sum = sum + number;
+  count = count + 1;
+  return { sum, count };
+};
+
 const sumAndCount = function (numbers) {
-  return numbers.reduce(
-    function ({ sum, count }, number) {
-      sum = sum + number;
-      count = count + 1;
-      return { sum, count };
-    },
-    { sum: 0, count: 0 }
-  );
+  return numbers.reduce(getSumAndCount, { sum: 0, count: 0 });
 };
 
 // deepFlatten([[1,2], [3,4, [5,6]], 7]) => [1,2,3,4,5,6,7]
@@ -572,11 +571,3 @@ console.log(countNegativeNumbers([1, -2, 3, -4, 9]));
 console.log(findSumOfEvenSquares([1, -2, 3, -4, 9]));
 console.log(concatenateWords(["hello", "world"]));
 console.log = function () {};
-
-function something() {
-  let a = 1;
-  let b = 2;
-  if (true) a = "s";
-  b = "w";
-  return [a, b];
-}
